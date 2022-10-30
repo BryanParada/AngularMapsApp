@@ -4,7 +4,7 @@
         <i class="fa-solid fa-plus"></i> Add  
     </li> 
     <li class="list-group-item"
-        (click)="goToBM()"
+        (click)="goToBM( bookmark.marker )"
         *ngFor="let bookmark of bookmarks; let i = index"
          >
          <!-- [ngStyle]="{

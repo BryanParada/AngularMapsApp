@@ -42,6 +42,7 @@ export class BookmarksComponent implements AfterViewInit {
   constructor() { }
   ngAfterViewInit(): void {
    
+    //inicializa mapa
     this.map = new mapboxgl.Map({
       container: this.divMap.nativeElement,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -57,13 +58,17 @@ export class BookmarksComponent implements AfterViewInit {
     // })
     //    .setLngLat(this.center)
     //    .addTo( this.map );
+
+    this.map.on('moveend', (event) =>{
+      const target = event.target;
+       console.log(target);
+      
+       
+     });
                       
 
   }
-
-  ngOnInit(): void {
-  }
-
+ 
   addBookmark(){
 
     const color = "#xxxxxx".replace(/x/g, y=>(Math.random()*16|0).toString(16));
@@ -80,11 +85,17 @@ export class BookmarksComponent implements AfterViewInit {
       marker: newBookmark
       }
     );
+ 
+    //console.log(this.bookmarks);
+    
   }
 
-  goToBM(){
-
-    //this.map.flyTo()
+  goToBM( BM: mapboxgl.Marker){
+ 
+    this.map.flyTo({
+      //center: this.center
+      center: BM.getLngLat()
+    })
   }
 
 }
