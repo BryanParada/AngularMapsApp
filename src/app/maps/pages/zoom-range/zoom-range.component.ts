@@ -42,21 +42,23 @@ export class ZoomRangeComponent implements AfterViewInit {
       zoom: this.zoomLevel
     });
 
+    //listener
+    this.map.on('zoom', (ev) => {
+      const actualZoom = this.map.getZoom();
+      this.zoomLevel = actualZoom;
+      
+    })
+
 
   }
 
   zoomOut(){
-    this.map.zoomOut();
-    this.zoomLevel = this.map.getZoom();
-    console.log(this.zoomLevel);
+    this.map.zoomOut(); 
     
   }
 
   zoomIn(){
-    this.map.zoomIn();
-
-    this.zoomLevel = this.map.getZoom();
-    console.log(this.zoomLevel);
+    this.map.zoomIn(); 
   }
 
 }
