@@ -5,11 +5,22 @@ import * as mapboxgl from "mapbox-gl";
   selector: 'app-bookmarks',
   templateUrl: './bookmarks.component.html',
   styles: [
-    `
+    ` 
      .mapContainer{
       width: 100%;
-      height: 100%;
-    }
+      height: 100%; 
+      }
+
+      .list-group{
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 99;
+      }
+
+      li{
+        cursor: pointer;
+      }
     `
   ]
 })
@@ -31,19 +42,34 @@ export class BookmarksComponent implements AfterViewInit {
       zoom: this.zoomLevel
     });
 
-    const markerHtml: HTMLElement = document.createElement('div');
-    markerHtml.innerHTML = 'Hola';
+    // const markerHtml: HTMLElement = document.createElement('div');
+    // markerHtml.innerHTML = 'Hola';
 
-    new mapboxgl.Marker({
-      //element: markerHtml // para personalizar icono
-    })
-       .setLngLat(this.center)
-       .addTo( this.map );
+    // new mapboxgl.Marker({
+    //   //element: markerHtml // para personalizar icono
+    // })
+    //    .setLngLat(this.center)
+    //    .addTo( this.map );
                       
 
   }
 
   ngOnInit(): void {
+  }
+
+  addBookmark(){
+
+    const color = "#xxxxxx".replace(/x/g, y=>(Math.random()*16|0).toString(16));
+
+    const newBookmark = new mapboxgl.Marker({ 
+                        draggable: true,
+                        color})
+                            .setLngLat( this.center )
+                            .addTo( this.map );
+  }
+
+  goToBM(){
+
   }
 
 }
