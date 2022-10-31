@@ -7,10 +7,12 @@
         (click)="goToBM( bookmark.marker! )"
         *ngFor="let bookmark of bookmarks; let i = index"
          >
+
+         <!-- (dblclick)="deleteBookmark( i )" -->
          <!-- [ngStyle]="{
             'background-color': bookmark.color 
         }" -->
-        <i class="fa-solid fa-bookmark fa-co" [ngStyle]="{ 'color': bookmark.color}"></i> Marker {{i + 1}}
+        <i class="fa-solid fa-bookmark fa-co" [ngStyle]="{ 'color': bookmark.color}"></i> Marker {{i + 1}}  <i class="fa-solid fa-trash" (click)="deleteBookmark( i )"></i>
     </li>
 </ul>
 

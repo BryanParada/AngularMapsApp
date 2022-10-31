@@ -87,6 +87,12 @@ export class BookmarksComponent implements AfterViewInit {
 
     this.saveBookmarksLocalStorage();
 
+    //grabar posicion marcador al soltar marcador - Este marcador no se ejecuta inmediatamente puesto que es un listener
+    newBookmark.on('dragend', () => {
+      console.log('dragEnd BookMark saved from addBookmark()'); 
+      this.saveBookmarksLocalStorage(); 
+    })
+
     
   }
 
@@ -136,10 +142,31 @@ export class BookmarksComponent implements AfterViewInit {
           marker: newMarker,
           color: m.color
         })
+
+        //grabar posicion marcador al soltar marcador
+        newMarker.on('dragend', () => {
+          console.log('dragEnd BookMark saved from readBookmarkLocalStorage()');
+          
+          this.saveBookmarksLocalStorage(); 
+        })
     })
     
   }
 
+  deleteBookmark(index: number){
+    this.bookmarks[index].marker?.remove(); //Este .remove() es un método que trae el propio marker y se encarga de borrarlo del mapa. Pero ese .remove() en ningún momento elimina el marker de nuestro array.
+    this.bookmarks.splice(index, 1); //se encarga de borrarlo de nuestro array ya que en el mapa ese market ya no existe.
+    this.saveBookmarksLocalStorage();
 
+    //Notas:
+    // Con la línea this.markers[i].marker?.remove(); no, solo lo estamos eliminando del mapa, solo estamos interactuando con la propia librería.
+    // Con la línea this.markers.splice(i, 1); sí lo estamos borrando de nuestro array de marcadores, pero no estamos notificándole al mapa que 
+    // ese marker ya no existe y tiene que borrarlo.
+    // En este caso la librería funciona así y no se actualiza automáticamente si desaparece del array (realmente el array de marcadores es
+    //  para nosotros poder tener referencia a los mismos, trabajar con ellos, y poder guardarlos para persistencia, pero para el mapa no es necesario), 
+    //  por lo que tenemos que manualmente realizar los dos pasos.
+  }
+
+ 
 
 }
