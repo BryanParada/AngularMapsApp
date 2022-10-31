@@ -3,7 +3,8 @@ import * as mapboxgl from "mapbox-gl";
 
 interface bookmarkColor {
   color: string,
-  marker: mapboxgl.Marker
+  marker?: mapboxgl.Marker,
+  center?: [number, number]
 }
 @Component({
   selector: 'app-bookmarks',
@@ -50,6 +51,8 @@ export class BookmarksComponent implements AfterViewInit {
       zoom: this.zoomLevel
     });
 
+    this.readBookmarkLocalStorage()
+
     // const markerHtml: HTMLElement = document.createElement('div');
     // markerHtml.innerHTML = 'Hola';
 
@@ -58,14 +61,8 @@ export class BookmarksComponent implements AfterViewInit {
     // })
     //    .setLngLat(this.center)
     //    .addTo( this.map );
-
-    this.map.on('moveend', (event) =>{
-      const target = event.target;
-       console.log(target);
-      
-       
-     });
-                      
+ 
+    
 
   }
  
@@ -87,6 +84,9 @@ export class BookmarksComponent implements AfterViewInit {
     );
  
     //console.log(this.bookmarks);
+
+    this.saveBookmarksLocalStorage();
+
     
   }
 
@@ -97,5 +97,49 @@ export class BookmarksComponent implements AfterViewInit {
       center: BM.getLngLat()
     })
   }
+
+  saveBookmarksLocalStorage(){
+    
+    const lngLatArr: bookmarkColor[] = [];
+
+    this.bookmarks.forEach( m => {
+      const color = m.color;
+      const {lng, lat} = m.marker!.getLngLat();
+
+      lngLatArr.push({
+        color: color,
+        center: [lng, lat]
+      }); 
+    });
+
+    localStorage.setItem('bookmarks', JSON.stringify(lngLatArr) )
+
+  }
+
+  readBookmarkLocalStorage(){
+    if (!localStorage.getItem('bookmarks')) {
+      return ;
+    }
+
+    const lngLatArr: bookmarkColor[] = JSON.parse(  localStorage.getItem('bookmarks')! ); //"!" siempre tendremos "bookmarks" ya que ya hicimos la validacion previa
+
+    lngLatArr.forEach( m => {
+
+        const newMarker = new mapboxgl.Marker({
+          color: m.color,
+          draggable: true
+        })
+        .setLngLat( m.center! ) //"!" siempre tendremos "m.center" en localstorage ya que ya hicimos la validacion previa
+        .addTo( this.map)
+
+        this.bookmarks.push({
+          marker: newMarker,
+          color: m.color
+        })
+    })
+    
+  }
+
+
 
 }
