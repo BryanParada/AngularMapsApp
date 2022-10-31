@@ -16,9 +16,9 @@ export class PropertiesComponent  {
  
   properties: Property[] = [
     {
-      title: 'Casa residencial, Canadá',
-      description: 'Bella propiedad en Katana, Canadá',
-      lngLat: [ -75.92722289474008, 45.280015511264466]
+      title: 'Balcon del rio',
+      description: 'Hotel de Campo y Cabañas, Argentina',
+      lngLat: [ -65.01072474805378 , -31.731052833044327]
     },
     {
       title: 'Casa de playa, México',
@@ -34,6 +34,16 @@ export class PropertiesComponent  {
       title: 'Local comercial, España',
       description: 'Local comercial disponible en Madrid, España, cerca de El Jardín Secreto.',
       lngLat: [ -3.7112735618380177, 40.42567285425766 ]
+    },
+    {
+      title: 'Mona Vale Beach, Australia',
+      description: 'Hermosa Playa de surf que corre hacia el sureste durante 1 km. Australia',
+      lngLat: [ 151.31362720945043, -33.67953387171997 ]
+    },
+    {
+      title: 'Harvard Museum, USA',
+      description: 'Amplias colecciones de ciencias naturales, incluidos animales, minerales y flores de vidrio.',
+      lngLat: [ -71.11556576063575 , 42.378627620390574 ]
     },
   ]
 

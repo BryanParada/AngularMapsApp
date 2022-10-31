@@ -18,7 +18,7 @@
                 *ngFor="let property of properties">
 
                 <div class="card">
-                    <img src="..." class="card-img-top">
+                    <app-mini-map [lngLat]="property.lngLat" class="card-img-top"></app-mini-map> 
                     <div class="card-body">
                         <h5 class="card-title"> {{ property.title }} </h5>
                         <p class="card-text"> {{ property.description}} </p>
